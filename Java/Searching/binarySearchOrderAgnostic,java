@@ -1,0 +1,62 @@
+/*
+Approach:
+- This code performs a binary search on an order-agnostic array, where the order (ascending or descending) is not known in advance. It first determines the order and then applies the binary search algorithm accordingly.
+
+Time Complexity: O(log(n))
+- The binary search algorithm has a time complexity of O(log(n)), where 'n' is the number of elements in the array.
+
+Space Complexity: O(1)
+- The code uses a constant amount of extra space for variables, so the space complexity is O(1).
+
+Sample Input:
+- Example input arrays for testing the binarySearchOrderAgnosticAlgo function.
+
+Sample Output:
+- The expected output when searching for specific elements in the input arrays.
+*/
+
+public class binarySearchOrderAgnostic {
+
+  // This function performs a binary search on an order-agnostic array
+  static int binarySearchOrderAgnosticAlgo(int[] arr, int target) {
+    int startIndex = 0;
+    int endIndex = arr.length - 1;
+
+    // Determine whether the array is in ascending or descending order
+    boolean isAsc = (arr[startIndex] < arr[endIndex]);
+
+    while (startIndex <= endIndex) {
+      int middleIndex = startIndex + (endIndex - startIndex) / 2;
+
+      if (arr[middleIndex] == target) {
+        return middleIndex;  // If the target is found, return its index
+      }
+
+      if (isAsc) {
+        // If the array is in ascending order, perform binary search accordingly
+        if (target > arr[middleIndex]) {
+          startIndex = middleIndex + 1;
+        } else if (target < arr[middleIndex]) {
+          endIndex = middleIndex - 1;
+        }
+      } else {
+        // If the array is in descending order, perform binary search accordingly
+        if (target < arr[middleIndex]) {
+          startIndex = middleIndex + 1;
+        } else if (target > arr[middleIndex]) {
+          endIndex = middleIndex - 1;
+        }
+      }
+    }
+    return -1;  // If the target is not found, return -1
+  }
+
+  public static void main(String[] args) {
+    int[] arrAsc = {-343, 1, 2, 3, 4, 5, 6, 7, 8, 9, 54}; // Ascending Array
+    int[] arrDes = {32323, 2342, 453, 54, 32, 2, -32, -534, -5462};  // Descending Array
+
+    // Test the binarySearchOrderAgnosticAlgo function with both ascending and descending arrays
+    System.out.println(binarySearchOrderAgnosticAlgo(arrAsc, 8)); // Output: 8 (index of 8 in the ascending array)
+    System.out.println(binarySearchOrderAgnosticAlgo(arrDes, 2)); // Output: 5 (index of 2 in the descending array)
+  }
+}
